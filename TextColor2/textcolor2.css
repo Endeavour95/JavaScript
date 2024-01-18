@@ -1,0 +1,76 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#root {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+div {
+    padding: 15px;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #229dd6;
+    font-size: 16px;
+    margin: 5px;
+}
+
+/* button:focus {
+    outline: none;
+} */
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#cbuttons button {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    /* border: none; */
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* #cbuttons button :hover {
+    background-color: pink;
+} */
+
+/* #cbuttons button:focus {
+    border: 5px solid black;
+} */
+
+#output {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+#sub:hover {
+    /* background-color: #409840; */
+    background-color: green;
+
+}
+
+#can:hover {
+    background-color: red;
+}

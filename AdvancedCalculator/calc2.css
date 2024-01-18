@@ -1,0 +1,44 @@
+table { 
+    /* border: 1px solid black;  */
+    border:none;
+    border-radius: 50px;
+    /* background-color: rgba(196, 219, 218, 0.2); */
+    box-shadow: 0 0 10px rgb(202, 196, 196);
+    margin-left: auto; 
+    margin-right: auto; 
+    height: 20vh;
+    padding: 2%;
+} 
+  
+input[type="button"] { 
+    /* justify-content: center; */
+    width: 90%; 
+    padding: 20px 15px; 
+    /* padding: auto; */
+    /* background-color: rgb(85, 182, 206);  */
+    box-shadow: 0 0 10px rgb(85, 182, 206);
+    color: black; 
+    font-size: 24px; 
+    font-weight: bold; 
+    border: none; 
+    margin: 5px 5px;
+    border-radius: 50px; 
+} 
+  
+input[type="text"] { 
+    /* margin-left: none; 
+    margin-right: none;  */
+    width: 100%;
+    padding: 20px 30px; 
+    font-size: 24px; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 50px; 
+    border: 1px solid black; 
+}
+
+input[type="button"]:hover {
+    /* width: 100%; */
+    transform: rotate(20deg);
+
+}
