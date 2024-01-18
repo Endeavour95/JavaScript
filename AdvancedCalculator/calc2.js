@@ -1,10 +1,19 @@
+// let str1 = "(((100+54)-45)/545)*((5454%22)*4545)";
+
+// str1.split('')
+
+// let arrstr1 = ["(", "(", "(", "1", "0", "0", "+", "5", "4", ")", "-", "4", "5", ")", "/", "5", "4", "5", ")", "*", "(", "(", "5", "4", "5", "4", "%", "2", "2", ")", "*", "4", "5", "4", "5", ")"];
+
+// arrstr1.join('')
+
+let arrstr = [];
+
 const data = {
-    fval: "",
-    ope: "",
-    sval: ""
+    numbers: [],
+    operators: []
 };
 
-let flag = false;
+// let flag = false;
 
 document.addEventListener("DOMContentLoaded", function () {
     let resultInput = document.getElementById("result");
@@ -19,99 +28,217 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleButtonClick(value) {
         switch (value) {
+            case "C":
+                resetData();
+                display(value);
+                break;
             case "=":
                 try {
-                    // resultInput.value = evaluateExpression();
-                    // resetData();
-                    flag = true;
-                    display(flag);
+                    processData();
+                    display(value);
                 } catch (error) {
-                    resultInput.value = "Error";
+                    resultInput.value = error;
                     resetData();
                 }
                 break;
-            case "C":
-                resultInput.value = "";
-                resetData();
+            case "⌫":
+                arrstr.pop();
+                // processData();
+                display(value);
                 break;
             case "+":
             case "-":
             case "*":
             case "/":
-                data.ope = value;
-                display(flag);
-                // resultInput.value = data.fval + data.ope;
+            case "%":
+                arrstr.push(value);
+                // processData();
+                display(value);
                 break;
             default:
-                if (!data.ope) {
-                    data.fval += value;
-                    display(flag);
-                    // resultInput.value = data.fval
-                } else {
-                    if (Number(value) || value == 0 || value == ".") {
-                        data.sval += value;
-                        display(flag);
-                        // resultInput.value = data.fval + data.ope + data.sval;
-                    }
-                }
+                arrstr.push(value);
+                // processData();
+                display(value);
+
         }
     }
 
     function evaluateExpression() {
-        if (!data.fval && !data.ope && !data.sval) {
-            alert("Enter proper expression");
-            return "";
-        } else if (!data.ope && !data.sval) {
-            alert("Select operator and second value");
-            return "";
-        } else if (!data.sval) {
-            alert("Select second number");
-            return "";
+        let nums = data.numbers;
+        let opes = data.operators;
+        if ((nums.length < 1) && (opes.length < 1)) {
+            alert("Nothing is selected to perform operation");
+            return arrstr.join('');
+        } else if ((nums.length <= 1) && (opes.length < 1)) {
+            alert("Select operator and one more number to perform operation");
+            return arrstr.join('');
+        } else if ((nums.length < 1) && (opes.length <= 1)) {
+            resetData();
+            alert("Invalid expression");
+            return arrstr.join('');
+        } else if ((nums.length <= 1) && (opes.length <= 1)) {
+            alert("Select one more number to perform operation");
+            return arrstr.join('');
         } else {
-            switch (data.ope) {
-                case "+":
-                    return String(parseFloat(data.fval) + parseFloat(data.sval));
-                case "-":
-                    return String(parseFloat(data.fval) - parseFloatmber(data.sval));
-                case "*":
-                    return String(parseFloat(data.fval) * parseFloat(data.sval));
-                case "/":
-                    return String(parseFloat(data.fval) / parseFloat(data.sval));
-                default:
-                    return "Error";
+            let res = 100;
+
+            resetData();
+            arrstr.push(res);
+            data.numbers.push(res);
+            return arrstr.join('');
+        }
+    }
+
+    function processData() {
+        let str = arrstr.join('');
+        data.numbers = [];
+        data.operators = [];
+
+        for (let i = 0; i < str.length; i++) {
+            const currentChar = str[i];
+
+            if (/[0-9.]/.test(currentChar)) {
+                let number = currentChar;
+                while ((i + 1 < str.length) && (/[0-9.]/.test(str[i + 1]))) {
+                    i++;
+                    number += str[i];
+                }
+                data.numbers.push(parseFloat(number));
+            } else {
+                data.operators.push(currentChar);
             }
         }
     }
 
     function resetData() {
-        data.fval = "";
-        data.ope = "";
-        data.sval = "";
+        // str = "";
+
+        // if (flag) {
+        //     arrstr = [];
+        //     arrstr.push(evaluateExpression());
+        //     data.numbers = [];
+        //     data.operators = [];
+        //     data.numbers.push(evaluateExpression());
+        // } else {
+        arrstr = [];
+        data.numbers = [];
+        data.operators = [];
+        // }
     }
 
-    // function display() {
-    //     if ((data.fval != "")) {
-    //         resultInput.value = data.fval;
-    //     } else if ((data.fval != "") && (!data.ope != "")) {
-    //         resultInput.value = data.fval + data.ope;
-    //     } else if ((!data.fval != "") && (!data.ope != "") && (data.sval != "")) {
-    //         resultInput.value = data.fval + data.ope + data.sval;
-    //     }
-    // }
+    function display(val) {
+        // switch (val) {
+        //     case "=":
+        //         resultInput.value = evaluateExpression();
+        //         break;
+        //     // case "C":
+        //     // case "⌫":
+        //     // case "+":
+        //     // case "-":
+        //     // case "*":
+        //     // case "/":
+        //     // case "%":
+        //     default:
+        //         resultInput.value = arrstr.join('');
+        //         // break;
+        // }
 
-    function display(flag) {
-        if (flag) {
+        if (val == "=") {
             resultInput.value = evaluateExpression();
-            resetData();
         } else {
-            if ((data.fval != "") && (data.ope != "") && (data.sval != "")) {
-                resultInput.value = data.fval + data.ope + data.sval;
-            } else if ((data.fval != "") && (data.ope != "")) {
-                resultInput.value = data.fval + data.ope;
-            } else if ((data.fval != "")) {
-                resultInput.value = data.fval;
-            }
+            resultInput.value = arrstr.join('');
         }
     }
-
 });
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     const data = {
+//         numbers: [],
+//         operators: []
+//     };
+
+//     function clearResult() {
+//         document.getElementById('result').value = '';
+//         clearData();
+//     }
+
+//     function appendToResult(value) {
+//         document.getElementById('result').value += value;
+//     }
+
+//     function backspace() {
+//         const currentValue = document.getElementById('result').value;
+//         document.getElementById('result').value = currentValue.slice(0, -1);
+//         clearData();
+//     }
+
+//     function calculateResult() {
+//         const inputString = document.getElementById('result').value;
+
+//         // Clear previous data
+//         clearData();
+
+//         // Regular expression to match numbers and operators
+//         const regex = /(\d+(\.\d+)?|[\+\-\*\/\%])/g;
+
+//         // Extract numbers and operators from the string
+//         const elements = inputString.match(regex);
+
+//         // Populate numbers and operators arrays
+//         elements.forEach(element => {
+//             if (/[0-9]/.test(element) || element === '.') {
+//                 data.numbers.push(parseFloat(element));
+//             } else {
+//                 data.operators.push(element);
+//             }
+//         });
+
+//         // Calculate result based on operator precedence (BODMAS/BIDMAS) rule
+//         const operatorsPrecedence = ['%', '*', '/', '+', '-'];
+
+//         operatorsPrecedence.forEach(operator => {
+//             while (data.operators.includes(operator)) {
+//                 const index = data.operators.indexOf(operator);
+//                 const leftOperand = data.numbers[index];
+//                 const rightOperand = data.numbers[index + 1];
+//                 let result;
+
+//                 switch (operator) {
+//                     case '%':
+//                         result = (leftOperand / 100) * rightOperand;
+//                         break;
+//                     case '*':
+//                         result = leftOperand * rightOperand;
+//                         break;
+//                     case '/':
+//                         result = leftOperand / rightOperand;
+//                         break;
+//                     case '+':
+//                         result = leftOperand + rightOperand;
+//                         break;
+//                     case '-':
+//                         result = leftOperand - rightOperand;
+//                         break;
+//                     default:
+//                         break;
+//                 }
+
+//                 // Update numbers and operators arrays with the result
+//                 data.numbers.splice(index, 2, result);
+//                 data.operators.splice(index, 1);
+//             }
+//         });
+
+//         // Display the result
+//         document.getElementById('result').value = data.numbers[0];
+//     }
+
+//     function clearData() {
+//         // Clear data arrays
+//         data.numbers = [];
+//         data.operators = [];
+//     }
+// });
