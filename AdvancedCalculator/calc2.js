@@ -1,8 +1,8 @@
-// let str1 = "(((100+54)-45)/545)*((5454%22)*4545)";
+// let str1 = "(((100+54)-45)/9)*((54%22)*4)";
 
 // str1.split('')
 
-// let arrstr1 = ["(", "(", "(", "1", "0", "0", "+", "5", "4", ")", "-", "4", "5", ")", "/", "5", "4", "5", ")", "*", "(", "(", "5", "4", "5", "4", "%", "2", "2", ")", "*", "4", "5", "4", "5", ")"];
+// let arrstr1 = ['(', '(', '(', '1', '0', '0', '+', '5', '4', ')', '-', '4', '5', ')', '/', '9', ')', '*', '(', '(', '5', '4', '%', '2', '2', ')', '*', '4', ')'];
 
 // arrstr1.join('')
 
@@ -22,7 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     buttons.forEach(function (button) {
         button.addEventListener("click", function () {
+            // if (data.numbers.length<=1 && data.operators.length<=1) {
+            //     if (arrstr.includes("√") && arrstr.indexOf("√") == 0) {
+            //         handleButtonClick("=");
+            //     }
+            // }
+
+            // else {
             handleButtonClick(button.value);
+            // }
         });
     });
 
@@ -43,21 +51,51 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
             case "⌫":
                 arrstr.pop();
-                // processData();
                 display(value);
                 break;
+            case "(":
+            case ")":
+                break;
+            case "%":
+                processData()
+                if (data.numbers.length == 1 && data.operators.length == 0) {
+                    arrstr.push(value);
+                    display();
+
+
+                } else {
+                    alert("This operation can be perform with two values only")
+                    display();
+                }
+                break;
+            case "√":
+                // processData()
+                // if (data.numbers.length == 0 && data.operators.length == 0) {
+                //     arrstr.push(value);
+                //     display();
+                // } else {
+                //     alert("The operator should be selected before the number as it supports only one operand after it.")
+                //     display();
+                // }
+                // break;
+                arrstr.push(value);
+                display(value);
+                break;
+            case "^":
+            case "/":
+            case "*":
             case "+":
             case "-":
-            case "*":
-            case "/":
-            case "%":
-                arrstr.push(value);
-                // processData();
-                display(value);
-                break;
             default:
+                processData()
+                if (data.numbers.length == 0) {
+                    alert("You have to select at least one number before selecting operator");
+                    // resetData()
+                    // display()
+                } else if (condition) {
+                    
+                }
                 arrstr.push(value);
-                // processData();
                 display(value);
 
         }
@@ -77,10 +115,33 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Invalid expression");
             return arrstr.join('');
         } else if ((nums.length <= 1) && (opes.length <= 1)) {
-            alert("Select one more number to perform operation");
-            return arrstr.join('');
+            if (arrstr.includes("√")) {
+                if (arrstr.indexOf("√") == 0) {
+                    let res = Math.sqrt(data.numbers[0])
+                    resetData();
+                    arrstr.push(res);
+                    return arrstr.join('');
+                } else {
+                    resetData()
+                    alert("Invalid expression");
+                    return arrstr.join('');
+                }
+            } else {
+                alert("Select one more number to perform operation");
+                return arrstr.join('');
+            }
         } else {
             let res = 100;
+
+            switch (key) {
+                case value:
+
+                    break;
+
+                default:
+                    break;
+            }
+
 
             resetData();
             arrstr.push(res);
@@ -110,39 +171,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function resetData() {
-        // str = "";
+    // function rootcalculate() {
 
-        // if (flag) {
-        //     arrstr = [];
-        //     arrstr.push(evaluateExpression());
-        //     data.numbers = [];
-        //     data.operators = [];
-        //     data.numbers.push(evaluateExpression());
-        // } else {
+    // }
+
+    function resetData() {
         arrstr = [];
         data.numbers = [];
         data.operators = [];
-        // }
     }
 
     function display(val) {
-        // switch (val) {
-        //     case "=":
-        //         resultInput.value = evaluateExpression();
-        //         break;
-        //     // case "C":
-        //     // case "⌫":
-        //     // case "+":
-        //     // case "-":
-        //     // case "*":
-        //     // case "/":
-        //     // case "%":
-        //     default:
-        //         resultInput.value = arrstr.join('');
-        //         // break;
-        // }
-
         if (val == "=") {
             resultInput.value = evaluateExpression();
         } else {
@@ -150,6 +189,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
