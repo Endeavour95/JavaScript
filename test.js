@@ -44,7 +44,8 @@
 
 
 
-let str = "100+54-45/545*5454%22*4545";
+let str = "100+54-45/2*54%22*4";
+
 
 const data = {
     numbers: [],
@@ -57,7 +58,7 @@ const regex = /(\d+(\.\d+)?|[\+\-\*\/\%])/g;
 // Extract numbers and operators from the string
 const elements = str.match(regex);
 
-// Populate numbers and operators arrays
+// seperate numbers and operators
 elements.forEach(element => {
     if (/[0-9]/.test(element) || element === '.') {
         data.numbers.push(parseFloat(element));
@@ -66,8 +67,8 @@ elements.forEach(element => {
     }
 });
 
-// Calculate result based on operator precedence (BODMAS/BIDMAS) rule
-const operatorsPrecedence = ['%', '*', '/', '+', '-'];
+// Calculate result based on operator precedence BODMAS rule
+const operatorsPrecedence = ['%', '/', '*', '+', '-'];
 
 operatorsPrecedence.forEach(operator => {
     while (data.operators.includes(operator)) {
@@ -80,11 +81,11 @@ operatorsPrecedence.forEach(operator => {
             case '%':
                 result = (leftOperand / 100) * rightOperand;
                 break;
-            case '*':
-                result = leftOperand * rightOperand;
-                break;
             case '/':
                 result = leftOperand / rightOperand;
+                break;
+            case '*':
+                result = leftOperand * rightOperand;
                 break;
             case '+':
                 result = leftOperand + rightOperand;
@@ -102,5 +103,5 @@ operatorsPrecedence.forEach(operator => {
     }
 });
 
-console.log("Result:", data.numbers[0]);
+console.log("Result:", data.numbers);
 
